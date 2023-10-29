@@ -1,0 +1,312 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&display=swap" rel="stylesheet">
+</head>
+<style>
+    .hidden {
+        display: none;
+    }
+    html {
+        padding: 0;
+        margin: 0;
+        font-family: 'Inter';
+    }
+    body {
+        padding: 0;
+        margin: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: #ECECEC;
+    }
+    .outer-container {
+        height: 90vh;
+        width: 26vw;
+        right: 2vw;
+        position: absolute;
+        bottom: 4vh;
+        border-radius: 2em;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+    .top-area {
+        position: absolute;
+        top: 0;
+        height: 16%;
+        width: 100%;
+        background-color: white;
+        border-top-right-radius: 2em;
+        border-top-left-radius: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        z-index: 10;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    }
+    .ocimg {
+        width: 20%;
+    }
+    .OIRA {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    .bottom-area {
+        position: absolute;
+        height: 12.5%;
+        bottom: 0;
+        width: 100%;
+        background-color: #ECECEC;
+        border-bottom-left-radius: 2em;
+        border-bottom-right-radius: 2em;
+        display: flex;
+        justify-content: space-around;
+    }
+    .middle-container {
+        position: absolute;
+        height: 71.5%;
+        width: 100%;
+        background-color: #ECECEC;
+        top: 16%;
+        overflow: auto;
+        overflow-anchor: auto  !important;
+
+    }
+    .title {
+        font-size: 1.5em;
+        font-weight: 400;
+    }
+    .descr {
+        font-size: 1em;
+        font-weight: 300;
+    }
+    .testdip {
+        position: absolute;
+        top: 35%;
+        right: 5%;
+    }
+    .arrowdown {
+        font-size: 2em;
+    }
+    .inner-cont {
+        border-top: 1px solid rgba(0, 0, 0, 0.5);
+        width: 90%;
+    }
+    .formthing {
+        height: 70%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        vertical-align: middle;
+    }
+    .formthing input[type="text"] {
+        width: 100%;
+        border: none;
+        font-size: 18px;
+        outline: none;
+        background-color: #ECECEC;
+    }
+    .formthing input[type="text"]::-webkit-input-placeholder {
+        font-size: 1em;
+        font-weight: 100;
+    }
+    .formthing .ionic-button {
+        background-color: #ECECEC;
+        border: none;
+        color: #676767;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .formthing .ionic-button ion-icon {
+        transform: scale(2);
+    }
+    .chat-history {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        /* overflow-y: scroll; */
+
+    }
+    .chat-history::before {
+        content: "";
+        height: 1em;
+        width: 100%;
+    }
+    .chat-bubble {
+        max-width: 70%;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .usertext {
+        background-color: darkgray;
+        padding: 15px;
+        border-radius: 20px;
+        border-top-right-radius: 5px;
+    }
+    .comptext {
+        background-color: #FFA43C;
+        padding: 15px;
+        border-radius: 20px;
+        border-top-left-radius: 5px;
+    }
+    .ucaption {
+        height: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+    .caption {
+        height: 2em !important;
+        display: flex;
+        align-items: center;
+    }
+    .user-bubble {
+        align-self: flex-end;
+    }
+    .chatbot-message {
+        background-color: #ECECEC;
+        align-self: flex-start;
+        text-align: left;
+        border-radius: 10px;
+        padding: 10px;
+        max-width: 70%;
+        margin: 10px;
+    }
+    /* .user-message {
+        background-color: #3880ff;
+        color: white;
+        align-self: flex-end;
+        text-align: right;
+        border-radius: 10px;
+        padding: 10px;
+        max-width: 70%;
+        margin: 10px;
+    } */
+    .userresp {
+        position: relative;
+        padding-top: 10px;
+    }
+    .thinking-balls {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+    background-color: #ECECEC;
+    border-radius: 50%;
+    animation: thinkingAnimation 1s infinite, moveBalls 3s infinite;
+}
+
+
+@keyframes thinkingAnimation {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes moveBalls {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(5px);
+    }
+    50% {
+        transform: translateX(0);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+</style>
+
+<body>
+    <div class="outer-container">
+        <div class="top-area">
+            <img src="{%static 'occ.png'%}" class="ocimg" />
+            <div class="OIRA">
+                <div class="title"> OIRA ChatBot</div>
+                <div class="descr"> Ask any questions! :) </div>
+            </div>
+            <div class="testdip"><ion-icon class="arrowdown" name="ios-arrow-down"></ion-icon></div>
+        </div>
+        <div class="middle-container">
+            <div id="chat-history" class="chat-history">
+                <div id="chatbot-response" class="hidden">
+                    <p id="response-text"></p>
+                </div>
+            </div>
+            <div id="anchor"></div>
+        </div>
+        <div class="bottom-area">
+            <div class="inner-cont">
+                <form class="formthing" method="post" id="user-input-form">
+                    {% csrf_token %}
+                    <input type="text" id="id_message" placeholder="Type a message..." {% if chatbot_response %}disabled{% endif %}>
+                    <button type="submit" class="ionic-button" {% if chatbot_response %}disabled{% endif %}>
+                        <ion-icon name="send"></ion-icon>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#user-input-form").on("submit", function (event) {
+                event.preventDefault();
+                var userMessage = $("#id_message").val();
+                if (userMessage.trim() === "") {
+                    return;
+                }
+    
+                $("#id_message").prop("disabled", true);
+                $(".ionic-button").prop("disabled", true);
+    
+                $("#chat-history").append("<div class='chat-bubble user-bubble'><div class='ucaption'>You</div><div class='userresp'><div class='usertext'>" + userMessage + "</div></div></div>");
+    
+                $("#chat-history").append("<div class=' thinking chat-bubble chatbot-bubble'><div class='caption'><img src='{% static 'occ.png' %}' style='height:100%;padding-right:5px;'/> OIRA ChatBot</div> <div class='userresp'><div class='comptext'> <span class='thinking-balls'></span><span class='thinking-balls'></span><span class='thinking-balls'></span></div></div>");
+                $('.middle-container').scrollTop($('.middle-container').height()*$('.middle-container').height());
+                
+                $.ajax({
+                    type: "POST",
+                    url: window.location.href,
+                    data: {
+                        message: userMessage,
+                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                    },
+                    success: function (data) {
+                        $("#id_message").val("");
+                        $(".thinking").addClass("hidden");
+                        $(".thinking-balls").remove();
+                        $("#chatbot-response").addClass("hidden");
+                        $("#response-text").text(data.chatbot_response);
+    
+                        $("#chat-history").append("<div class='chat-bubble chatbot-bubble'><div class='caption'><img src='{% static 'occ.png' %}' style='height:100%;padding-right:5px;'/> OIRA ChatBot</div> <div class = 'userresp'><div class = 'comptext'>" + data.chatbot_response + "</div></div></div>");
+                        $('.middle-container').scrollTop($('.middle-container').height()*$('.middle-container').height());
+
+    
+                        $("#id_message").prop("disabled", false);
+                        $(".ionic-button").prop("disabled", false);
+                    },
+                });
+            });
+        });
+    </script>
+</body>
+</html>

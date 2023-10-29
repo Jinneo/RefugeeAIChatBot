@@ -1,0 +1,69 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    html{
+        padding: 0;
+        margin: 0;
+        font-family: Verdana, Helvetica, sans-serif;
+
+    }
+    body{
+        padding: 0;
+        margin: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: #ECECEC;
+    }
+    .outer-container{
+        height: 65vh;
+        width:27.5vw;
+        background-color: white;
+        right: 2vw;
+        position: absolute;
+        bottom: 4vh;
+        border-radius: 2em;
+
+    }
+    .top-area{
+        position: absolute;
+        top:0;
+        height: 20%;
+        width: 100%;
+        background-color: #FFA43C;
+        border-top-right-radius: 2em;
+        border-top-left-radius: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+    }
+    .ocimg{
+        width: 17.5%;
+    }
+    .OIRA{
+        font-size: 1.25em;
+    }
+    .bottom-area{
+
+    }
+</style>
+<body>
+   <div class = "outer-container">
+        <div class = "top-area">
+            <img src = "{%static 'occ.png'%}" class = "ocimg" />
+            <div class = "OIRA"> Orange County AI Chatbot</div>
+        </div>
+        <div class = "bottom-area">
+            <form></form>
+        </div>
+
+
+    </div>
+</body>
+</html>
